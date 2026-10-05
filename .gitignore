@@ -1,0 +1,9 @@
+# Crash dump analysis: personal tooling, not part of the checker
+crashdump/
+
+# Your local paths
+settings.ini
+
+# Output
+*_report.txt
+__pycache__/
