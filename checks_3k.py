@@ -27,6 +27,7 @@ class ThreeKingdomsChecker(GameChecker):
     # technologies left over from regions and factions it deleted, and still builds.
     SETTLEMENT_REGION_SEV = WARN
     UNOWNED_CAPITAL_SEV = WARN  # CA's 8p_start_pos has 2
+    GARRISON_OWNER_SEV = ERROR  # 3K's start_pos fails to generate (CA's data never does it)
 
     def __init__(self, data, campaigns, db, maps=None):
         super().__init__(data, campaigns, db, maps)

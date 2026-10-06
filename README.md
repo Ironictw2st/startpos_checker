@@ -186,7 +186,7 @@ if it isn't already running.
 | `faction-limit` | error | more than 1024 `start_pos_factions` rows in one campaign |
 | `region-settlement` | error | region with no settlement, or several |
 | `army` / `army-size` | error/warning | units on a non-general or a pool general, more than 19 units, soldiers ≤ 0 |
-| `garrison-owner` | warning | character placed in a settlement its faction doesn't own |
+| `garrison-owner` | warning (WH3) / error (3K) | character placed in a settlement its faction doesn't own. In 3K the start_pos fails to generate |
 | `horde`, `general-option` | error/warning | horde details / frontend options on non-generals; one frontend leader used by several factions |
 | `character-position` | warning | generals of different factions on the same spot |
 | `region-absent`, `faction-absent` | warning/info | rows naming a region/faction that isn't in the campaign |
@@ -227,6 +227,8 @@ start_pos still builds.
   climate restrictions or required buildings, so those checks don't run.
 - `start_pos_technologies.faction` is a start_pos faction ID, not a faction key.
 - A general's land units (`start_pos_land_units`, which vanilla leaves empty) are one retinue: at most 6.
+- `garrison-owner` is an error: a character in a settlement his faction doesn't
+  own makes the 3K start_pos fail to generate (CA's 3K data never does it).
 - Severities that CA's 3K data needed lowered: a settlement, religion or
   pooled resource whose region doesn't exist, and a technology whose faction
   doesn't exist, are warnings (CA's AK has 1022 settlements and 90

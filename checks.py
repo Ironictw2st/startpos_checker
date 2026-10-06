@@ -30,6 +30,9 @@ class Checker:
     MAX_ARMY_UNITS = MAX_ARMY_UNITS
     SETTLEMENT_REGION_SEV = ERROR    # start_pos_settlements.region that resolves to nothing
     UNOWNED_CAPITAL_SEV = ERROR      # faction_capital region without an owner
+    # Character placed in a settlement its faction doesn't own. CA's WH3 combi has one
+    # (Lazarghs at Mount Thug) and builds, so a warning there.
+    GARRISON_OWNER_SEV = WARN
     # Tables that name a faction by its *key* (faction-absent check).
     FACTION_KEY_TABLES = ("start_pos_technologies", "start_pos_entity_association_faction_regions",
                           "start_pos_region_foreign_slots")
@@ -344,8 +347,7 @@ class Checker:
             reg = self.region_by_id.get(str(s["region"]))
             if reg and reg["owning_faction"] != c["faction"]:
                 owner = self.faction_by_id.get(reg["owning_faction"])
-                # CA's combi data has one of these (Lazarghs at Mount Thug), so not an error.
-                self.add(WARN, "garrison-owner", "start_pos_character_to_settlements", r.where(),
+                self.add(self.GARRISON_OWNER_SEV, "garrison-owner", "start_pos_character_to_settlements", r.where(),
                          f"{self.describe_char(c)} is placed in {reg['region']}, owned by "
                          f"{owner['faction'] if owner else 'nobody'}")
             if c["is_in_generals_pool"]:
